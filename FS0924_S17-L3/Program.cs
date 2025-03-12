@@ -1,4 +1,5 @@
 using FS0924_S17_L3.Data;
+using FS0924_S17_L3.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,9 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString)
 );
+
+builder.Services.AddScoped<BookService>();
+builder.Services.AddScoped<AdminService>();
 
 var app = builder.Build();
 

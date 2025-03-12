@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using FS0924_S17_L3.Services;
+using FS0924_S17_L3.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FS0924_S17_L3.Controllers
 {
@@ -18,8 +21,12 @@ namespace FS0924_S17_L3.Controllers
             return View(booksList);
         }
 
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
+            var genresList = await _adminService.GetAllGenres();
+
+            ViewData["Genres"] = genresList;
+
             return View();
         }
 
@@ -51,6 +58,10 @@ namespace FS0924_S17_L3.Controllers
             {
                 return RedirectToAction("Index");
             }
+
+            var genresList = await _adminService.GetAllGenres();
+
+            ViewData["Genres"] = genresList;
 
             return View(book);
         }

@@ -26,7 +26,7 @@ namespace FS0924_S17_L3.Models
 
         [ForeignKey("GenreId")]
         //proprietà di navigazione
-        public required Genre Genre { get; set; }
+        public Genre? Genre { get; set; }
 
         public ICollection<Lending>? Lendings { get; set; }
     }

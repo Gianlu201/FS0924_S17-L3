@@ -32,13 +32,29 @@ namespace FS0924_S17_L3.Services
             {
                 var booksList = new BooksListViewModel();
 
-                booksList.Books = await _context.Books.ToListAsync();
+                booksList.Books = await _context.Books.Include(b => b.Genre).ToListAsync();
 
                 return booksList;
             }
             catch
             {
                 return new BooksListViewModel() { Books = new List<Book>() };
+            }
+        }
+
+        public async Task<GenresListViewModel> GetAllGenres()
+        {
+            try
+            {
+                var genresList = new GenresListViewModel();
+
+                genresList.Genres = await _context.Genres.ToListAsync();
+
+                return genresList;
+            }
+            catch
+            {
+                return new GenresListViewModel() { Genres = new List<Genre>() };
             }
         }
 
@@ -51,7 +67,7 @@ namespace FS0924_S17_L3.Services
                     Id = Guid.NewGuid(),
                     Title = addBookViewModel.Title,
                     Author = addBookViewModel.Author,
-                    Category = addBookViewModel.Category,
+                    GenreId = addBookViewModel.GenreId,
                     Available = addBookViewModel.Available,
                     Cover = addBookViewModel.Cover,
                 };
@@ -80,7 +96,7 @@ namespace FS0924_S17_L3.Services
                 Id = book.Id,
                 Title = book.Title,
                 Author = book.Author,
-                Category = book.Category,
+                GenreId = book.GenreId,
                 Available = book.Available,
                 Cover = book.Cover,
             };
@@ -99,11 +115,14 @@ namespace FS0924_S17_L3.Services
                     return false;
                 }
 
-                book.Title = editBookViewModel.Title;
-                book.Author = editBookViewModel.Author;
-                book.Cover = editBookViewModel.Cover;
-                book.Available = editBookViewModel.Available;
-                book.Category = editBookViewModel.Category;
+                if (editBookViewModel.GenreId != null)
+                {
+                    book.Title = editBookViewModel.Title;
+                    book.Author = editBookViewModel.Author;
+                    book.Cover = editBookViewModel.Cover;
+                    book.Available = editBookViewModel.Available;
+                    book.GenreId = (Guid)editBookViewModel.GenreId;
+                }
 
                 return await SaveAsync();
             }
