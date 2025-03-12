@@ -15,6 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<BookService>();
 builder.Services.AddScoped<AdminService>();
+builder.Services.AddScoped<LendingService>();
 
 var app = builder.Build();
 

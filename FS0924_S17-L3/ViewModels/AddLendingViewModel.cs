@@ -1,28 +1,23 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using FS0924_S17_L3.Models;
 
-namespace FS0924_S17_L3.Models
+namespace FS0924_S17_L3.ViewModels
 {
-    public class Lending
+    public class AddLendingViewModel
     {
-        [Key]
         public Guid Id { get; set; }
 
         [Required]
+        [Display(Name = "Book")]
         public Guid IdBook { get; set; }
 
         [Required]
+        [Display(Name = "User")]
         public Guid IdUser { get; set; }
 
         public DateTime LendingDate { get; set; }
 
         public DateTime LendingEnd { get; set; }
-
-        // navigazione
-        [ForeignKey("IdBook")]
-        public Book Book { get; set; }
-
-        [ForeignKey("IdUser")]
-        public User User { get; set; }
     }
 }

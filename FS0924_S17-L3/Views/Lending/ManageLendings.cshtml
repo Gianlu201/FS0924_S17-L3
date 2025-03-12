@@ -1,0 +1,21 @@
+﻿@model LendingsListViewModel
+
+@{
+    ViewData["Title"] = "Manage all lendings";
+}
+
+<h1>All lendings</h1>
+
+@if(Model.Lendings != null && Model.Lendings.Count >0)
+{
+    foreach(var leanding in Model.Lendings)
+    {
+        <div class="border border-1 w-50 p-3">
+            <p>User: @leanding.User.Name</p>
+            <p>Book: @leanding.Book.Title</p>
+            <p>Lending date: @leanding.LendingDate.ToString("dd/MM/yyyy")</p>
+            <p>Lending end: @leanding.LendingEnd.ToString("dd/MM/yyyy")</p>
+
+        </div>
+    }
+}

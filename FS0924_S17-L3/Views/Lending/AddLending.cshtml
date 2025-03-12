@@ -1,0 +1,37 @@
+﻿@model AddLendingViewModel
+
+@{
+    ViewData["Title"] = "Add lending";
+    var booksList = TempData["AvailableBooks"] as BooksListViewModel;
+    var usersList = TempData["Users"] as UsersListViewModel;
+}
+
+<h1>New lending</h1>
+
+<form method="post" asp-controller="Lending" asp-action="AddLending">
+    <div class="mb-3">
+        <label class="form-label" for="bookId" asp-for="IdBook"></label>
+        <select id="bookId" class="form-select" asp-for="IdBook">
+            <option value="">-- choose a book --</option>
+            @foreach (var book in booksList.Books)
+            {
+                <option value=@book.Id>@book.Title</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="userId" asp-for="IdUser"></label>
+        <select id="userId" class="form-select" asp-for="IdUser">
+            <option value="">-- choose an user --</option>
+            @foreach (var user in usersList.Users)
+            {
+                <option value=@user.Id>@user.Name</option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <button class="btn btn-success">Add leanding</button>
+    </div>
+</form>

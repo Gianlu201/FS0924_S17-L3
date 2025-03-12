@@ -4,7 +4,17 @@
     ViewData["Title"] = "All Books - Admin";
 }
 
-<div class="d-flex justify-content-end">
+<div class="d-flex justify-content-between">
+    <div class="dropdown">
+        <button class="btn btn-outline-info dropdown-toggle fw-bold" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Lendings
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" asp-controller="Lending" asp-action="AddLending">Add lending</a></li>
+            <li><a class="dropdown-item" asp-controller="Lending" asp-action="ManageLendings">Manage lendings</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+    </div>
     <a class="btn btn-primary" asp-controller="Admin" asp-action="Add">Add</a>
 </div>
 
