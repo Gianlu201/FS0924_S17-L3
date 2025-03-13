@@ -15,6 +15,7 @@
             <p>Book: @leanding.Book.Title</p>
             <p>Lending date: @leanding.LendingDate.ToString("dd/MM/yyyy")</p>
             <p>Lending end: @leanding.LendingEnd.ToString("dd/MM/yyyy")</p>
+            <p>Status: @(leanding.Active ? "Active" : "Ended")</p>
 
         </div>
     }

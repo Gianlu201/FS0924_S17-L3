@@ -10,6 +10,9 @@ namespace FS0924_S17_L3.Models
         [Required]
         public required string Name { get; set; }
 
+        [Required]
+        public bool IsAdmin { get; set; }
+
         // navigazione
         public ICollection<Lending>? Lendings { get; set; }
     }

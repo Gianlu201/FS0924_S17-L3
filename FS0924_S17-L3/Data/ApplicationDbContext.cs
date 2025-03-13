@@ -29,6 +29,12 @@ namespace FS0924_S17_L3.Data
             modelBuilder.Entity<Lending>().HasOne(u => u.User).WithMany(l => l.Lendings);
 
             modelBuilder.Entity<User>().HasMany(l => l.Lendings).WithOne(u => u.User);
+
+            // default value per user IsAdmin
+            modelBuilder.Entity<User>().Property(u => u.IsAdmin).HasDefaultValueSql("0");
+
+            // default value per lending Active
+            modelBuilder.Entity<Lending>().Property(l => l.Active).HasDefaultValueSql("1");
         }
     }
 }

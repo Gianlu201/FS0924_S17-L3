@@ -18,6 +18,9 @@ namespace FS0924_S17_L3.Models
 
         public DateTime LendingEnd { get; set; }
 
+        [Required]
+        public bool Active { get; set; }
+
         // navigazione
         [ForeignKey("IdBook")]
         public Book Book { get; set; }

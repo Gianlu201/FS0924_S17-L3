@@ -69,6 +69,7 @@ namespace FS0924_S17_L3.Services
                     IdBook = addLendingViewModel.IdBook,
                     LendingDate = DateTime.Now,
                     LendingEnd = DateTime.Now.AddDays(7),
+                    Active = true,
                 };
 
                 _context.Lendings.Add(lending);
