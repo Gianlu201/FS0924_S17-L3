@@ -62,6 +62,23 @@ namespace FS0924_S17_L3.Services
         {
             try
             {
+                var fileName = addBookViewModel.Cover.FileName;
+
+                var path = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    "uploads",
+                    "images",
+                    fileName
+                );
+
+                await using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await addBookViewModel.Cover.CopyToAsync(stream);
+                }
+
+                var webPath = Path.Combine("uploads", "images", fileName);
+
                 var book = new Book()
                 {
                     Id = Guid.NewGuid(),
@@ -69,7 +86,7 @@ namespace FS0924_S17_L3.Services
                     Author = addBookViewModel.Author,
                     GenreId = addBookViewModel.GenreId,
                     Available = addBookViewModel.Available,
-                    Cover = addBookViewModel.Cover,
+                    Cover = webPath,
                 };
 
                 _context.Books.Add(book);
@@ -98,7 +115,7 @@ namespace FS0924_S17_L3.Services
                 Author = book.Author,
                 GenreId = book.GenreId,
                 Available = book.Available,
-                Cover = book.Cover,
+                Cover = null,
             };
 
             return editBook;
@@ -115,11 +132,28 @@ namespace FS0924_S17_L3.Services
                     return false;
                 }
 
+                var fileName = editBookViewModel.Cover.FileName;
+
+                var path = Path.Combine(
+                    Directory.GetCurrentDirectory(),
+                    "wwwroot",
+                    "uploads",
+                    "images",
+                    fileName
+                );
+
+                await using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await editBookViewModel.Cover.CopyToAsync(stream);
+                }
+
+                var webPath = Path.Combine("uploads", "images", fileName);
+
                 if (editBookViewModel.GenreId != null)
                 {
                     book.Title = editBookViewModel.Title;
                     book.Author = editBookViewModel.Author;
-                    book.Cover = editBookViewModel.Cover;
+                    book.Cover = webPath;
                     book.Available = editBookViewModel.Available;
                     book.GenreId = (Guid)editBookViewModel.GenreId;
                 }

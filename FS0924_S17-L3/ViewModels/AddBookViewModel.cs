@@ -30,6 +30,6 @@ namespace FS0924_S17_L3.ViewModels
         public required bool Available { get; set; }
 
         [Display(Name = "Cover")]
-        public string? Cover { get; set; }
+        public IFormFile? Cover { get; set; }
     }
 }

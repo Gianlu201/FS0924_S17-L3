@@ -5,7 +5,7 @@
     var genresList = ViewData["Genres"] as GenresListViewModel;
 }
 
-<form method="post" asp-controller="Admin" asp-action="Edit">
+<form method="post" asp-controller="Admin" asp-action="Edit" enctype="multipart/form-data">
     <div class="mb-3">
         <label class="form-label" for="title" asp-for="Title"></label>
         <input id="title" class="form-control" asp-for="Title" />
@@ -38,7 +38,7 @@
 
     <div class="mb-3">
         <label class="form-label" for="cover" asp-for="Cover"></label>
-        <input id="cover" class="form-control" asp-for="Cover" />
+        <input type="file" id="cover" class="form-control" asp-for="Cover" />
     </div>
 
     <div>
