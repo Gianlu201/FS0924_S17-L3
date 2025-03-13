@@ -50,5 +50,18 @@ namespace FS0924_S17_L3.Controllers
 
             return View(lendingsList);
         }
+
+        [HttpGet("lending/return/{id:guid}")]
+        public async Task<IActionResult> Returned(Guid id)
+        {
+            var result = await _lendingService.ReturnBookAsync(id);
+
+            if (!result)
+            {
+                TempData["Error"] = "Error while returning book";
+            }
+
+            return RedirectToAction("Index", "Admin");
+        }
     }
 }

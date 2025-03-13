@@ -132,30 +132,39 @@ namespace FS0924_S17_L3.Services
                     return false;
                 }
 
-                var fileName = editBookViewModel.Cover.FileName;
+                string webPath = "";
 
-                var path = Path.Combine(
-                    Directory.GetCurrentDirectory(),
-                    "wwwroot",
-                    "uploads",
-                    "images",
-                    fileName
-                );
-
-                await using (var stream = new FileStream(path, FileMode.Create))
+                if (editBookViewModel.Cover != null)
                 {
-                    await editBookViewModel.Cover.CopyToAsync(stream);
-                }
+                    var fileName = editBookViewModel.Cover.FileName;
 
-                var webPath = Path.Combine("uploads", "images", fileName);
+                    var path = Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "wwwroot",
+                        "uploads",
+                        "images",
+                        fileName
+                    );
+
+                    await using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await editBookViewModel.Cover.CopyToAsync(stream);
+                    }
+
+                    webPath = Path.Combine("uploads", "images", fileName);
+                }
 
                 if (editBookViewModel.GenreId != null)
                 {
                     book.Title = editBookViewModel.Title;
                     book.Author = editBookViewModel.Author;
-                    book.Cover = webPath;
                     book.Available = editBookViewModel.Available;
                     book.GenreId = (Guid)editBookViewModel.GenreId;
+
+                    if (editBookViewModel.Cover != null)
+                    {
+                        book.Cover = webPath;
+                    }
                 }
 
                 return await SaveAsync();

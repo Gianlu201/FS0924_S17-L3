@@ -8,14 +8,27 @@
 
 @if(Model.Lendings != null && Model.Lendings.Count >0)
 {
-    foreach(var leanding in Model.Lendings)
+    foreach(var lending in Model.Lendings)
     {
-        <div class="border border-1 w-50 p-3">
-            <p>User: @leanding.User.Name</p>
-            <p>Book: @leanding.Book.Title</p>
-            <p>Lending date: @leanding.LendingDate.ToString("dd/MM/yyyy")</p>
-            <p>Lending end: @leanding.LendingEnd.ToString("dd/MM/yyyy")</p>
-            <p>Status: @(leanding.Active ? "Active" : "Ended")</p>
+        <div class="d-flex border border-1 w-50 p-3 mb-3">
+            <div class="flex-grow-1">
+                <p class="my-1"><span class="fw-bold">User:</span> @lending.User.Name</p>
+                <p class="my-1"><span class="fw-bold">Book:</span> @lending.Book.Title</p>
+                <p class="my-1"><span class="fw-bold">Lending date:</span> @lending.LendingDate.ToString("dd/MM/yyyy")</p>
+                <p class="my-1"><span class="fw-bold">Lending end:</span> @lending.LendingEnd.ToString("dd/MM/yyyy")</p>
+                <p class="my-1"><span class="fw-bold">Status:</span> @(lending.Active ? "Active" : "Ended")</p>
+            </div>
+            <div class="flex-grow-0">
+                @if(lending.Active)
+                {
+                    <a asp-controller="Lending" asp-action="Return" asp-route-id="@lending.Id" class="btn btn-warning">Returned</a>
+                }
+                else
+                {
+                    <a href="javascript:void(0);" class="btn btn-secondary disabled">Returned</a>
+                }
+            </div>
+            
 
         </div>
     }

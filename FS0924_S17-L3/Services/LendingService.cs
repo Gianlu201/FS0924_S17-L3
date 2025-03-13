@@ -8,10 +8,12 @@ namespace FS0924_S17_L3.Services
     public class LendingService
     {
         private readonly ApplicationDbContext _context;
+        private readonly EmailService _emailService;
 
-        public LendingService(ApplicationDbContext context)
+        public LendingService(ApplicationDbContext context, EmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
 
         private async Task<bool> SaveAsync()
@@ -83,6 +85,8 @@ namespace FS0924_S17_L3.Services
 
                 book.Available = false;
 
+                await _emailService.SendEmail("Pinco", book.Title);
+
                 return await SaveAsync();
             }
             catch
@@ -107,6 +111,36 @@ namespace FS0924_S17_L3.Services
             catch
             {
                 return new LendingsListViewModel() { Lendings = new List<Lending>() };
+            }
+        }
+
+        public async Task<bool> ReturnBookAsync(Guid id)
+        {
+            try
+            {
+                var lending = await _context.Lendings.FindAsync(id);
+
+                if (lending == null)
+                {
+                    return false;
+                }
+
+                lending.Active = false;
+
+                var book = await _context.Books.FindAsync(lending.IdBook);
+
+                if (book == null)
+                {
+                    return false;
+                }
+
+                book.Available = true;
+
+                return await SaveAsync();
+            }
+            catch
+            {
+                return false;
             }
         }
     }
