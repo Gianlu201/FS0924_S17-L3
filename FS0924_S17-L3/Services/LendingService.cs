@@ -85,7 +85,12 @@ namespace FS0924_S17_L3.Services
 
                 book.Available = false;
 
-                await _emailService.SendEmail("Pinco", book.Title);
+                var emailResult = await _emailService.SendEmail("Pinco", book.Title);
+
+                if (!emailResult)
+                {
+                    return false;
+                }
 
                 return await SaveAsync();
             }
